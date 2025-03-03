@@ -1,6 +1,9 @@
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from app.config import settings
 from app.database import init_db
 from app.routers import codenames, namespaces, stats
@@ -36,12 +39,20 @@ app.include_router(namespaces.router)
 app.include_router(stats.router)
 
 
+_frontend = os.path.join(os.path.dirname(__file__), "..", "frontend")
+if os.path.isdir(_frontend):
+    app.mount("/ui", StaticFiles(directory=_frontend, html=True), name="frontend")
+
 @app.get("/", tags=["Health"])
 async def root():
+    ui_path = os.path.join(os.path.dirname(__file__), "..", "frontend", "index.html")
+    if os.path.isfile(ui_path):
+        return FileResponse(ui_path)
     return {
         "name": settings.app_name,
         "version": settings.app_version,
         "styles": ["military", "nature", "abstract", "cosmic"],
         "languages": ["en", "ru"],
         "docs": "/docs",
+        "ui": "/ui",
     }
