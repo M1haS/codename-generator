@@ -10,11 +10,10 @@ Supports:
 """
 
 import random
-import string
 from typing import Optional, Set
-from app.core.wordlists import WORDLISTS, WORDLISTS_RU, SUPPORTED_STYLES
-from app.config import settings
 
+from app.config import settings
+from app.core.wordlists import WORDLISTS, WORDLISTS_RU
 
 SEPARATORS = {
     "space": " ",

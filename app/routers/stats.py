@@ -1,8 +1,10 @@
 from collections import defaultdict
 from typing import List
+
 from fastapi import APIRouter, Depends
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
+
 from app.database import get_db
 from app.models.models import Codename, CodenameStatus
 from app.schemas.schemas import StyleStats, TimelinePoint

@@ -1,10 +1,9 @@
 from datetime import datetime
 from enum import Enum as PyEnum
-from sqlalchemy import (
-    Column, Integer, String, DateTime, ForeignKey,
-    Enum, Boolean, Text, JSON
-)
+
+from sqlalchemy import JSON, Boolean, Column, DateTime, Enum, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
+
 from app.database import Base
 
 

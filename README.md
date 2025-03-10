@@ -22,9 +22,10 @@ A production-grade REST API for generating, tracking and managing operation code
 ## Quick Start
 
 ```bash
-python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+uv sync
+uv run uvicorn app.main:app --reload
 ```
 
 API docs → http://localhost:8000/docs

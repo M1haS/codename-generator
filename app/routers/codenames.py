@@ -1,13 +1,15 @@
 from datetime import datetime, timedelta
 from typing import List, Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from app.database import get_db
-from app.models.models import Codename, Namespace, CodenameStatus
-from app.schemas.schemas import GenerateRequest, GenerateResponse, CodenameOut, RetireRequest
-from app.core.generator import generate_batch, CodenameExhaustedError
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.config import settings
+from app.core.generator import CodenameExhaustedError, generate_batch
+from app.database import get_db
+from app.models.models import Codename, CodenameStatus, Namespace
+from app.schemas.schemas import CodenameOut, GenerateRequest, GenerateResponse, RetireRequest
 
 router = APIRouter(tags=["Codenames"])
 

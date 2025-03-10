@@ -1,18 +1,20 @@
 from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
-from app.database import get_db
-from app.models.models import Namespace, Codename, CodenameStatus
-from app.schemas.schemas import NamespaceCreate, NamespaceOut, SaturationReport
+
 from app.core.generator import pool_size
+from app.database import get_db
+from app.models.models import Codename, CodenameStatus, Namespace
+from app.schemas.schemas import NamespaceCreate, NamespaceOut, SaturationReport
 
 router = APIRouter(prefix="/namespaces", tags=["Namespaces"])
 
 
 @router.get("/", response_model=List[NamespaceOut])
 async def list_namespaces(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Namespace).where(Namespace.is_active == True))
+    result = await db.execute(select(Namespace).where(Namespace.is_active is True))
     namespaces = result.scalars().all()
     out = []
     for ns in namespaces:

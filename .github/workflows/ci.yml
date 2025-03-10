@@ -13,17 +13,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          python-version: "3.12"
-          cache: pip
+          version: "latest"
+          enable-cache: true
 
-      - name: Install ruff
-        run: pip install ruff
+      - name: Set up Python
+        run: uv python install 3.12
 
       - name: Ruff lint
-        run: ruff check app/ tests/ --select E,F,W,I --ignore E501
+        run: uv run ruff check app/ tests/ --select E,F,W,I --ignore E501
 
   test:
     name: Test
@@ -31,30 +31,24 @@ jobs:
     needs: lint
     strategy:
       matrix:
-        python-version: ["3.11", "3.12"]
-
+        python-version: ["3.12"]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          python-version: ${{ matrix.python-version }}
-          cache: pip
+          version: "latest"
+          enable-cache: true
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install -r requirements.txt pytest aiosqlite
+        run: uv sync --frozen --python ${{ matrix.python-version }}
 
       - name: Run tests
-        run: pytest tests/ -v --tb=short
-
-      - name: Upload coverage
-        if: matrix.python-version == '3.12'
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: htmlcov/
-          retention-days: 7
+        run: uv run pytest tests/ -v --tb=short
 
   docker:
     name: Docker build

@@ -7,7 +7,6 @@ Words are chosen for distinctiveness and memorability.
 
 from typing import Dict, List
 
-
 WORDLISTS: Dict[str, Dict[str, List[str]]] = {
     "military": {
         "adjectives": [

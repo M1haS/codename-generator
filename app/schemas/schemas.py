@@ -1,9 +1,10 @@
 from datetime import datetime
-from typing import Optional, List, Any
-from pydantic import BaseModel, Field, field_validator
-from app.models.models import CodenameStatus, GenerationStyle
-from app.core.wordlists import SUPPORTED_STYLES, SUPPORTED_LANGUAGES
+from typing import List, Optional
 
+from pydantic import BaseModel, Field, field_validator
+
+from app.core.wordlists import SUPPORTED_LANGUAGES
+from app.models.models import CodenameStatus, GenerationStyle
 
 # ── Generate ──────────────────────────────────────────────────────────────────
 

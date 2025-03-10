@@ -1,9 +1,10 @@
 import pytest
+
 from app.core.generator import (
-    generate_unique,
-    generate_batch,
-    pool_size,
     CodenameExhaustedError,
+    generate_batch,
+    generate_unique,
+    pool_size,
 )
 
 

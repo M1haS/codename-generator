@@ -7,10 +7,11 @@ re-entering them into the active pool.
 """
 
 from datetime import datetime
-from sqlalchemy.ext.asyncio import AsyncSession
+
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.models.models import Codename, CodenameStatus
-from app.config import settings
 
 
 async def recycle_eligible(db: AsyncSession) -> int:
